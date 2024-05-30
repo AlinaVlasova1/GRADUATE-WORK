@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistrationComponent } from './registration.component';
 
+import { RegistrationRoutingModule } from './registration-routing.module';
+import {ReactiveFormsModule} from "@angular/forms";
+import {RegistrationComponent} from "./registration.component";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -9,7 +12,10 @@ import { RegistrationComponent } from './registration.component';
     RegistrationComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RegistrationRoutingModule,
+    ReactiveFormsModule,
+    InputTextModule
+    ]
 })
 export class RegistrationModule { }

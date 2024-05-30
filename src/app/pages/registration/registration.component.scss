@@ -1,0 +1,34 @@
+.main-container{
+  background-color: #161616;
+  color: #F5F5F5;
+}
+
+.registration-input-wrap {
+  display: inline-block;
+}
+
+.label {
+  display: inline-block;
+  width: 140px;
+  padding-top: 6%;
+}
+
+h4{
+  display: inline-block;
+  margin-left: 25%;
+}
+
+.label-input {
+  display: flex;
+  justify-content: center;
+
+}
+
+.button button {
+  background-color: #5D45FD;
+  border-color: #5D45FD;
+  color: white;
+  font-weight: bold;
+}
+
+

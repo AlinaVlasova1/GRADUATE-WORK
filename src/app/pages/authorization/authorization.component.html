@@ -1,1 +1,36 @@
-<p>authorization works!</p>
+<div class="h-100 main-container">
+  <div class="d-flex flex-column col-2 authorization-input-wrap m-auto h-100">
+    <div class="mt-4 justify-content-center">
+      <h4>Авторизация</h4>
+      <div class="mt-3 user-info" [formGroup]="authForm">
+        <div class="mt-3 ">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Логин'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="login">
+        </div>
+        <div class="mt-3">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Пароль'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="password">
+        </div>
+        <div class="mt-4 buttons mx-3">
+          <button class="btn-success btn mx-2" type="submit"
+                  (click)="authUser()"
+                  [disabled]="!authForm.valid">Войти</button>
+          <button class="btn-success btn mx-1" type="submit"
+                  (click)="regUser()">Зарегестрироваться</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #userFieldTitle let-value = "titleValue">
+  <span class="mx-3 label" style="width: 55px">{{value}}</span>
+</ng-template>

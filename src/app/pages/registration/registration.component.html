@@ -1,1 +1,60 @@
-<p>registration works!</p>
+<div class="main-container h-100">
+  <div class="d-flex flex-column col-3 m-auto h-100">
+    <div class="mt-4 h-100">
+      <h4>Личная информация</h4>
+      <div class="mt-3 user-info" [formGroup]="regForm">
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Имя'}"></ng-container>
+          <input type="text"
+                 class="mt-3 mx-10"
+                 pInputText
+                 formControlName="firstName">
+        </div>
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Фамилия'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="lastName">
+        </div>
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Логин'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="login">
+        </div>
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Пароль'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="password">
+        </div>
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Повторите пароль'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 pInputText
+                 formControlName="repeatPsw">
+        </div>
+        <div class="mt-3 label-input">
+          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Номер карты'}"></ng-container>
+          <input type="text"
+                 class="mt-3"
+                 formControlName="cardNumber"
+                 pInputText>
+        </div>
+        <div class="mt-4 d-flex justify-content-center button">
+          <button class="btn-success btn" type="submit"
+                  (click)="postUser()"
+                  [disabled]="!regForm.valid">Зарегестрироваться</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #userFieldTitle let-value = "titleValue">
+  <span class="mx-3 label">{{value}}</span>
+</ng-template>
