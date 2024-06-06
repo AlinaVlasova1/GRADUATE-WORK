@@ -1,14 +1,17 @@
-<div class="h-100 asaid-container d-inline-block">
-  <div class="mt-4 icon">
-    <i class="pi pi-align-justify burger" style="font-size: 30px"></i>
+<div class="h-100 asaid-container d-flex">
+  <div class="flex-row">
+    <div class="mt-4 icon d-inline-block">
+      <i class="pi pi-align-justify burger" style="font-size: 30px"></i>
+    </div>
+    <div class="menu">
+      <ul>
+        <li *ngFor="let item of items; let i = index">
+          <a [routerLink]="item.route" class="link">
+            <span class="ml-2 label">{{item.label}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="menu">
-    <ul>
-      <li *ngFor="let item of items; let i = index">
-        <a [routerLink]="item.route" class="link">
-          <span class="ml-2 label">{{item.label}}</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+
 </div>

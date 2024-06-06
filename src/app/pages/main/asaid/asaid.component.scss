@@ -3,6 +3,11 @@
   color: white;
 }
 
+.menu {
+  display: inline-block;
+  height: 300px;
+}
+
 .menu ul{
   display: inline-block;
   list-style-type: none;
@@ -23,6 +28,11 @@
   display: inline-block;
   width: 200px;
   color: white;
+}
+
+.icon {
+  display: inline-block;
+  height: 40px;
 }
 
 .icon i{

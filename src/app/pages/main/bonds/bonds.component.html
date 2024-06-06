@@ -1,0 +1,19 @@
+<div class="d-block  bonds-block">
+  <div class="d-inline-block  mt-3 mx-4 cards"
+       (click)="goToBondInfoPage(bond)"
+       *ngFor="let bond of bondsOnPage">
+          <p-card  header="ISIN: {{bond[5]}}">
+            <p class="m-0">
+              Эмитент: {{bond[8]}}
+            </p>
+          </p-card>
+  </div>
+</div>
+<div class="flex-auto">
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="length"
+    [showCurrentPageReport]="true"></p-paginator>
+</div>

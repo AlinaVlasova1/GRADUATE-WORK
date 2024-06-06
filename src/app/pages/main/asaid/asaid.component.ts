@@ -14,27 +14,27 @@ export class AsaidComponent implements OnInit {
     this.items = [
       {
         label: 'Личный кабинет',
-        route: '',
+        route: [''],
       },
       {
         label: 'Облигации',
-        route: ''
+        route: ['bonds']
       },
       {
         label: 'Акции',
-        route: ''
+        route: ['shares']
       },
       {
         label: 'Валюта',
-        route: ''
+        route: ['']
       },
       {
         label: 'Металлы',
-        route: ''
+        route: ['']
       },
       {
         label: 'Настройка',
-        route: ''
+        route: ['']
       }
     ];
   }

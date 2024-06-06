@@ -3,7 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import {MainComponent} from "./main.component";
 
 const routes: Routes = [
-  {path: '', component: MainComponent}
+  {path: '', component: MainComponent,
+  children:[
+    {path: 'shares' , loadChildren: () => import('./shares/shares.module').then(m => m.SharesModule)},
+    {path: 'bonds' , loadChildren: () => import('./bonds/bonds.module').then(m => m.BondsModule)},
+    {path: 'info-bond/:id', loadChildren: () => import('./info-bond/info-bond.module').then(m => m.InfoBondModule)}
+  ]},
+
 ];
 
 @NgModule({

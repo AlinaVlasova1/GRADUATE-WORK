@@ -9,21 +9,31 @@ import {MenuModule} from "primeng/menu";
 import {TableModule} from "primeng/table";
 import {StyleClassModule} from "primeng/styleclass";
 import { HeaderComponent } from './header/header.component';
+import { SharesComponent } from './shares/shares.component';
+import { BondsComponent } from './bonds/bonds.component';
+import {CardModule} from "primeng/card";
+import {PaginatorModule} from "primeng/paginator";
+import { InfoBondComponent } from './info-bond/info-bond.component';
 
 
 @NgModule({
   declarations: [
     MainComponent,
     AsaidComponent,
-    HeaderComponent
+    HeaderComponent,
+    SharesComponent,
+    BondsComponent,
+    InfoBondComponent
   ],
-  imports: [
-    CommonModule,
-    MainRoutingModule,
-    InputTextModule,
-    MenuModule,
-    TableModule,
-    StyleClassModule
-  ]
+    imports: [
+        CommonModule,
+        MainRoutingModule,
+        InputTextModule,
+        MenuModule,
+        TableModule,
+        StyleClassModule,
+        CardModule,
+        PaginatorModule
+    ]
 })
 export class MainModule { }

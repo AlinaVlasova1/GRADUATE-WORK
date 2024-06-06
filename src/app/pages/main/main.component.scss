@@ -1,14 +1,27 @@
 app-main{
   height: 100vh;
+  width: 100%;
+}
+
+.main{
+  margin: 0;
+  padding: 0;
+  width: 1903px;
 }
 
 header{
-  display: inline-block;
-  width: 90%;
-  height: 18%;
+  margin-top: 0;
+  height: 100px;
   background-color: #EAEAEA;
+  width: 100%;
 }
 
 .asaid {
-  width: 232px;
+  width: 10%;
+  height: 100vh;
 }
+
+.block{
+  width: 89%;
+}
+
