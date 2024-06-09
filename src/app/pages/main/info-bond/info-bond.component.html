@@ -1,1 +1,20 @@
-<p>info-bond works!</p>
+<div class="mt-4 mx-4">
+  <p-panel header="{{newBondFromServer.SECID}}">
+    <p>
+      Эмитент: {{newBondFromServer.EMITENT}}.
+    </p>
+    <p>
+      Предаварительная цена: {{newBondFromServer.PREVPRICE}}р.
+    </p>
+    <p>
+      Дата выплаты следующего купона:  {{newBondFromServer.NEXTCOUPON}}.
+    </p>
+    <p>
+      Размер купона: {{newBondFromServer.COUPONVALUE}}р.
+    </p>
+    <p>
+      Дата выплаты облигации: {{newBondFromServer.MATDATE}}
+    </p>
+    <p-button label="Купить"></p-button>
+  </p-panel>
+</div>

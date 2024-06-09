@@ -53,6 +53,8 @@ export class BondsComponent implements OnInit, OnDestroy {
   }
 
   goToBondInfoPage(bond: any): void {
+    console.log("bond",bond );
+    this.bondsService.rememberBond(bond);
     this.router.navigate([`main/info-bond/${bond[1]}`])
   }
 

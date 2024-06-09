@@ -7,11 +7,11 @@ import {SharesService} from "../../../services/shares/shares.service";
   styleUrls: ['./shares.component.scss']
 })
 export class SharesComponent implements OnInit {
-  shares = [];
+ /* shares = [];*/
   constructor(private sharesService: SharesService) { }
 
   ngOnInit(): void {
-    this.shares = this.sharesService.getAllSares().data;
+    /*this.shares = this.sharesService.getAllSares().data;*/
   }
 
 }

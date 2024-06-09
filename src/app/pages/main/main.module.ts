@@ -22,8 +22,7 @@ import { InfoBondComponent } from './info-bond/info-bond.component';
     AsaidComponent,
     HeaderComponent,
     SharesComponent,
-    BondsComponent,
-    InfoBondComponent
+    BondsComponent
   ],
     imports: [
         CommonModule,
