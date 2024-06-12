@@ -23,3 +23,8 @@ export interface IBondTransform {
   EMITENT: string,
   MATDATE: string
 }
+
+export interface IBondHistory {
+  TRADEDATE: string,
+  CLOSE: number
+}
