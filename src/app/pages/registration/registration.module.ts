@@ -7,6 +7,7 @@ import {RegistrationComponent} from "./registration.component";
 import {InputTextModule} from "primeng/inputtext";
 import {MessagesModule} from "primeng/messages";
 import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {ToastModule} from "primeng/toast";
     InputTextModule,
     MessagesModule,
     ToastModule
-  ]
+  ],
+  providers: [MessageService]
 })
 export class RegistrationModule { }

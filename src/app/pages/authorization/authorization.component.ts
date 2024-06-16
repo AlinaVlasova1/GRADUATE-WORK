@@ -35,14 +35,14 @@ export class AuthorizationComponent implements OnInit {
       /* this.userService.setToStore(token);*/
 
 
-      this.router.navigate(['tickets/tickets-list']);
+      this.router.navigate(['main']);
 
     }, ()=> {
       this.messageService.add({severity:'warn', summary:"Ошибка"});
     });
 
     //Здесь нужно сделать проверку пользователя в базе данных//
-    this.router.navigate(['main']);
+
   }
 
   regUser() {

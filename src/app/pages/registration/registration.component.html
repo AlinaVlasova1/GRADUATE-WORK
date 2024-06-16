@@ -26,14 +26,14 @@
         </div>
         <div class="mt-3 label-input">
           <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Пароль'}"></ng-container>
-          <input type="text"
+          <input type="password"
                  class="mt-3"
                  pInputText
                  formControlName="password">
         </div>
         <div class="mt-3 label-input">
           <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Повторите пароль'}"></ng-container>
-          <input type="text"
+          <input type="password"
                  class="mt-3"
                  pInputText
                  formControlName="repeatPsw">

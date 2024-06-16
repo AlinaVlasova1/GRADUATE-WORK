@@ -10,6 +10,7 @@ import {CalendarModule} from "primeng/calendar";
 import {CarouselModule} from "primeng/carousel";
 import {MessagesModule} from "primeng/messages";
 import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {ToastModule} from "primeng/toast";
     FormsModule,
     MessagesModule,
     ToastModule
-  ]
+  ],
+  providers: [MessageService]
 })
 export class AuthorizationModule { }

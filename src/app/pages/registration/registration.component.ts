@@ -31,8 +31,9 @@ export class RegistrationComponent implements OnInit {
   postUser(): void | boolean {
     const userData = this.regForm.getRawValue();
     const postData = { ...userData};
-
-    if (this.regForm.controls['password'] != this.regForm.controls['repeatPsw']){
+    console.log("password", this.regForm.controls['password']);
+    console.log("repeatPsw", this.regForm.controls['repeatPsw']);
+    if (this.regForm.controls['password'].getRawValue() != this.regForm.controls['repeatPsw'].getRawValue()){
       this.messageService.add({severity: 'error', summary: 'Пароли не совпадают'})
       return false
     }
