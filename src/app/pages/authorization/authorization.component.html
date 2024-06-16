@@ -19,7 +19,7 @@
         </div>
         <div class="mt-4 buttons mx-3">
           <button class="btn-success btn mx-2" type="submit"
-                  (click)="authUser()"
+                  (click)="authUser($event)"
                   [disabled]="!authForm.valid">Войти</button>
           <button class="btn-success btn mx-1" type="submit"
                   (click)="regUser()">Зарегестрироваться</button>
@@ -34,3 +34,4 @@
 <ng-template #userFieldTitle let-value = "titleValue">
   <span class="mx-3 label" style="width: 55px">{{value}}</span>
 </ng-template>
+<p-toast></p-toast>

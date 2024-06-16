@@ -38,13 +38,6 @@
                  pInputText
                  formControlName="repeatPsw">
         </div>
-        <div class="mt-3 label-input">
-          <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Номер карты'}"></ng-container>
-          <input type="text"
-                 class="mt-3"
-                 formControlName="cardNumber"
-                 pInputText>
-        </div>
         <div class="mt-4 d-flex justify-content-center button">
           <button class="btn-success btn" type="submit"
                   (click)="postUser()"
@@ -58,3 +51,4 @@
 <ng-template #userFieldTitle let-value = "titleValue">
   <span class="mx-3 label">{{value}}</span>
 </ng-template>
+<p-toast></p-toast>
