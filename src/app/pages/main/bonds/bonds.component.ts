@@ -1,6 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {BondsService} from "../../../services/bonds/bonds.service";
-import {first, map, Observable, Subscription} from "rxjs";
+import {debounceTime, first, map, Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -8,14 +18,17 @@ import {Router} from "@angular/router";
   templateUrl: './bonds.component.html',
   styleUrls: ['./bonds.component.scss']
 })
-export class BondsComponent implements OnInit, OnDestroy {
-
+export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
+  inBonds: boolean;
   subscription: Subscription;
   bonds: any ;
   rows: number;
   first = 1;
   length: number;
-  bondsOnPage: any;
+  bondsOnPage: any[];
+  bondsCopy: any[];
+  searchValue: string;
+
   constructor(private bondsService: BondsService,
               private router: Router) { }
 
@@ -30,9 +43,36 @@ export class BondsComponent implements OnInit, OnDestroy {
        this.bondsOnPage = this.bonds.slice(0, 12);
 
        console.log("length", this.length);
+       console.log("this.bondsOnPage what?", typeof this.bondsOnPage);
+       this.bondsCopy = {...this.bonds};
      }
     )
-    console.log("length", this.length);
+
+
+    this.checkInBonds();
+    this.bondsService.setInBonds(this.inBonds);
+    this.bondsService.searchValue.subscribe((searchValue) => {
+      console.log("searchValue",searchValue)
+      if (searchValue) {
+        this.bonds = Object.values(this.bondsCopy).filter((el: any) => {
+          return  el[5].toLowerCase().includes(searchValue.toLowerCase())
+        });
+      } else {
+        this.bonds = {...this.bondsCopy};
+      };
+      this.bondsOnPage = this.bonds.slice(0, 12);
+      this.length = this.bonds.length;
+      console.log('this.bonds', this.bonds)
+    })
+  }
+
+  ngAfterViewInit() {
+
+
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
 
   }
 
@@ -57,7 +97,9 @@ export class BondsComponent implements OnInit, OnDestroy {
     this.bondsService.rememberBond(bond);
     this.router.navigate([`main/info-bond/${bond[1]}`])
   }
-
+  checkInBonds() {
+    this.inBonds = true;
+  }
 
 
 }

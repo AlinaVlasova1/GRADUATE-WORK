@@ -14,6 +14,7 @@ import { BondsComponent } from './bonds/bonds.component';
 import {CardModule} from "primeng/card";
 import {PaginatorModule} from "primeng/paginator";
 import { InfoBondComponent } from './info-bond/info-bond.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { InfoBondComponent } from './info-bond/info-bond.component';
         TableModule,
         StyleClassModule,
         CardModule,
-        PaginatorModule
+        PaginatorModule,
+        ReactiveFormsModule
     ]
 })
 export class MainModule { }

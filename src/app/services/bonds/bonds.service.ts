@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {IBond} from "../../models/bond";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BondsService {
-
+  inBonds: boolean;
   bond: any;
+  searchValue = new BehaviorSubject<string>('');
   constructor(private http: HttpClient) { }
 
   getAllBonds(): Observable<any> {
@@ -25,5 +26,13 @@ export class BondsService {
 
   rememberBond(bond: any): void {
     this.bond = bond;
+  }
+
+  setInBonds(inBonds: boolean) {
+    this.inBonds = inBonds;
+  }
+
+  checkInBonds() {
+    return this.inBonds;
   }
 }
