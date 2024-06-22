@@ -28,3 +28,9 @@ export interface IBondHistory {
   TRADEDATE: string,
   CLOSE: number
 }
+
+export interface IAllBonds {
+  SECID: string,
+  PREVPRICE: number,
+  COUPONVALUE: number
+}
