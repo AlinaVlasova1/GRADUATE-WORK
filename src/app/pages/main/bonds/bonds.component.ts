@@ -57,7 +57,7 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
          columns.map((column, index) => {
            for (let i = 0; i < keys.length; i++) {
              if (column == keys[i]){
-               if ((el[index]) && ((keys[i] == 'PREVPRICE')|| (keys[i] == 'COUPONVALUE'))){
+               if ((el[index]) && ((keys[i] == 'PREVPRICE')|| (keys[i] == 'COUPONVALUE')|| (keys[i] == 'SECID'))){
                  console.log('PREVPRICE',el[index] )
                 if (keys[i] == 'PREVPRICE'){
                    let j = Math.ceil(Number(el[index])*10);
