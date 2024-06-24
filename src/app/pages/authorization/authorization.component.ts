@@ -38,7 +38,7 @@ export class AuthorizationComponent implements OnInit {
       this.router.navigate(['main']);
 
     }, ()=> {
-      this.messageService.add({severity:'warn', summary:"Ошибка"});
+      this.messageService.add({severity:'warn', summary:"Данные введены неверно"});
     });
 
     //Здесь нужно сделать проверку пользователя в базе данных//

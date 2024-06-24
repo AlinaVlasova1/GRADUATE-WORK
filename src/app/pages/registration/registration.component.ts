@@ -46,14 +46,20 @@ export class RegistrationComponent implements OnInit {
         window.localStorage.setItem('user_'+userObj.login, objUserJsonStr);
       }
       this.messageService.add({severity:'success', summary:'Регистрация прошла успешно'});
+      this.router.navigate(['authorization']);
 
     }, (err: HttpErrorResponse)=> {
       console.log("err", err);
       const serverError = <ServerError> err.error;
+      console.log('serverError.errorText',serverError.errorText)
       this.messageService.add({severity:'warn', summary: serverError.errorText});
     });
-    this.router.navigate(['authorization']);
+
     // Здесь сделать метод post с отправкой на сервер и сохранением пользователя
+  }
+
+  authUser(ev: Event): void {
+    this.router.navigate(['authorization'])
   }
 
 }

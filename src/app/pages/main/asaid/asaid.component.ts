@@ -13,14 +13,14 @@ export class AsaidComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Личный кабинет',
+        label: 'Избранное',
         route: ['favorites'],
       },
       {
         label: 'Облигации',
         route: ['bonds']
       },
-      /*{
+      {
         label: 'Акции',
         route: ['shares']
       },
@@ -32,7 +32,7 @@ export class AsaidComponent implements OnInit {
         label: 'Металлы',
         route: ['']
       },
-      {
+     /* {
         label: 'Настройка',
         route: ['']
       }*/

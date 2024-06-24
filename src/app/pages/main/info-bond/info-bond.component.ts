@@ -47,14 +47,12 @@ export class InfoBondComponent implements OnInit, OnDestroy {
     Chart.register(...registerables);
 
     this.bond = this.bondsService.bond;
-   const emitent = this.bond[8];
-   const board = this.bond[14];
-   const isin = this.bond[1];
+   const isin = this.bond.SECID;
    const currentDay = new Date();
    const currentTransformDate = this.transformDate(currentDay);
    const startData: string = this.getStartData(currentTransformDate);
    console.log("startData", startData)
-   this.subscription = this.bondsService.getBondByISIn(board,isin).subscribe((data) => {
+   this.subscription = this.bondsService.getBondByISIn(isin).subscribe((data) => {
      const keys = Object.keys(this.bondFromServer);
      console.log("keys", keys);
      let newArr: ObjectfromKAndV[] = [];
@@ -76,9 +74,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
        newArr
      );
 
-     this.newBondFromServer.EMITENT = emitent;
-
-     this.newBondFromServer.COUPONVALUE = this.newBondFromServer.COUPONVALUE / 100;
      this.newBondFromServer.PREVPRICE = Math.ceil(this.newBondFromServer.PREVPRICE * 10);
      this.newBondFromServer.PREVDATE = new Date(this.newBondFromServer.PREVDATE)
        .toLocaleString('ru-RU',
@@ -91,7 +86,7 @@ export class InfoBondComponent implements OnInit, OnDestroy {
          {year: "numeric", month: "short", day: "numeric"});
      console.log("bondServer", this.newBondFromServer);
    })
-     this.subForChart = this.bondsService.getHistoryBond(board, isin, startData, currentTransformDate).subscribe((data) => {
+     this.subForChart = this.bondsService.getHistoryBond(isin, startData, currentTransformDate).subscribe((data) => {
          const columns: string[] = data.history.columns;
          const keys = Object.keys(this.bondHistory);
          const arrayData: DataFromServer[] = data.history.data;
@@ -121,39 +116,16 @@ export class InfoBondComponent implements OnInit, OnDestroy {
 
        this.labels = labelsForChart;
        this.priceDay = dataForChart;
-
-        /* keys.map((el, index) => {
-             for (let i = 0; i < columns.length; i++) {
-               if (el == columns[i]) {
-                 for (let j = 0; j < arrayData.length; j++) {
-                   if (arrayData[j][i] > 0) {
-                     if (el == 'TRADEDATE') {
-                       labelsForChart.push(
-                         new Date(arrayData[j][i])
-                           .toLocaleString('ru-RU',
-                             {year: "numeric", month: "short", day: "numeric"})
-                       )
-                     } else if (el == 'CLOSE') {
-                        dataForChart.push(<number>arrayData[j][i]*10);
-                     }
-                   }
-
-                 }
-               }
-             }
-             this.labels = labelsForChart;
-             this.priceDay = dataForChart;
-           }
-         )*/
+       console.log('this.priceDay', this.priceDay)
        console.log("labels", this.labels);
        console.log("priceDay", this.priceDay);
        const configChart = {
          labels: this.labels,
          datasets: [{
-           label: 'My First Dataset',
+           label: 'Цена облигации',
            data: this.priceDay,
            fill: false,
-           borderColor: 'rgb(75, 192, 192)',
+           borderColor: 'rgb(93, 69, 253)',
            tension: 0.1
          }]
        }

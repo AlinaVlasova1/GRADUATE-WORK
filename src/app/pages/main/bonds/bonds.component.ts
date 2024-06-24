@@ -38,7 +38,8 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   bondFromServer: IAllBonds = {
     SECID: '',
     PREVPRICE: 0,
-    COUPONVALUE: 0
+    COUPONVALUE: 0,
+    BOARDID: ''
 }
   newBondFromServer: IAllBonds[]
 
@@ -57,7 +58,7 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
          columns.map((column, index) => {
            for (let i = 0; i < keys.length; i++) {
              if (column == keys[i]){
-               if ((el[index]) && ((keys[i] == 'PREVPRICE')|| (keys[i] == 'COUPONVALUE')|| (keys[i] == 'SECID'))){
+               if ((el[index]) && ((keys[i] == 'PREVPRICE')|| (keys[i] == 'COUPONVALUE')|| (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
                  console.log('PREVPRICE',el[index] )
                 if (keys[i] == 'PREVPRICE'){
                    let j = Math.ceil(Number(el[index])*10);

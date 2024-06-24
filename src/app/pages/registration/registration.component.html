@@ -42,6 +42,9 @@
           <button class="btn-success btn" type="submit"
                   (click)="postUser()"
                   [disabled]="!regForm.valid">Зарегестрироваться</button>
+          <button class="btn-success btn mx-2" type="submit"
+                  (click)="authUser($event)"
+                  >Авторизоваться</button>
         </div>
       </div>
     </div>

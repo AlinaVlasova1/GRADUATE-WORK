@@ -32,5 +32,6 @@ export interface IBondHistory {
 export interface IAllBonds {
   SECID: string,
   PREVPRICE: number,
-  COUPONVALUE: number
+  COUPONVALUE: number,
+  BOARDID: string
 }
