@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {IUser, TOKEN_STORE_NAME} from "../models/users";
+import {IUser, TOKEN_STORE_NAME} from "../../models/users";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({

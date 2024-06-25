@@ -1,1 +1,18 @@
-<p>favorites works!</p>
+<div>
+  <div class="d-block  bonds-block">
+    <div class="d-inline-block  mt-3 mx-4 cards"
+         (click)="goToBondInfoPage(bond)"
+
+         *ngFor="let bond of favorites">
+      <p-card  header="ISIN: {{bond.SECID}}">
+        <p class="m-0">
+          Цена: {{bond.PREVPRICE}}р
+        </p>
+        <p class="m-0">
+          Размер купона: {{bond.COUPONVALUE}}р
+        </p>
+      </p-card>
+    </div>
+  </div>
+  <h1 class="mt-3 mx-4" *ngIf="favorites?.length === 0">В избранное еще ничего не добавлено</h1>
+</div>

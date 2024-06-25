@@ -5,6 +5,8 @@ import { InfoBondRoutingModule } from './info-bond-routing.module';
 import { InfoBondComponent } from './info-bond.component';
 import {PanelModule} from "primeng/panel";
 import {ButtonModule} from "primeng/button";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import {ButtonModule} from "primeng/button";
         CommonModule,
         InfoBondRoutingModule,
         PanelModule,
-        ButtonModule
-    ]
+        ButtonModule,
+        ToastModule
+    ],
+  providers: [MessageService]
 })
 export class InfoBondModule { }

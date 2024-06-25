@@ -11,6 +11,9 @@ import {
   StringOrNumber
 } from "../../../models/bond";
 import {Chart, registerables } from "chart.js";
+import {FavoritesService} from "../../../services/favorites/favorites.service";
+import {MessageService} from "primeng/api";
+import {IFavorite} from "../../../models/favorite";
 
 @Component({
   selector: 'app-info-bond',
@@ -41,7 +44,9 @@ export class InfoBondComponent implements OnInit, OnDestroy {
   labels: string[] = [];
   priceDay: number[] = [];
   constructor(private bondsService: BondsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private favoriteService: FavoritesService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     Chart.register(...registerables);
@@ -51,10 +56,8 @@ export class InfoBondComponent implements OnInit, OnDestroy {
    const currentDay = new Date();
    const currentTransformDate = this.transformDate(currentDay);
    const startData: string = this.getStartData(currentTransformDate);
-   console.log("startData", startData)
    this.subscription = this.bondsService.getBondByISIn(isin).subscribe((data) => {
      const keys = Object.keys(this.bondFromServer);
-     console.log("keys", keys);
      let newArr: ObjectfromKAndV[] = [];
      const arrayData: DataFromServer[] = data.securities.data;
      const values: StringOrNumber[] = arrayData[0];
@@ -84,7 +87,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
      this.newBondFromServer.NEXTCOUPON = new Date(this.newBondFromServer.NEXTCOUPON)
        .toLocaleString('ru-RU',
          {year: "numeric", month: "short", day: "numeric"});
-     console.log("bondServer", this.newBondFromServer);
    })
      this.subForChart = this.bondsService.getHistoryBond(isin, startData, currentTransformDate).subscribe((data) => {
          const columns: string[] = data.history.columns;
@@ -116,9 +118,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
 
        this.labels = labelsForChart;
        this.priceDay = dataForChart;
-       console.log('this.priceDay', this.priceDay)
-       console.log("labels", this.labels);
-       console.log("priceDay", this.priceDay);
        const configChart = {
          labels: this.labels,
          datasets: [{
@@ -172,6 +171,21 @@ export class InfoBondComponent implements OnInit, OnDestroy {
     }
     let newDataString = arrayData.map((el) => String(el)).join("-");
     return newDataString;
+  }
+
+  addFavorities(ev: Event){
+    const userData = localStorage.getItem('user');
+    const userId = JSON.parse(userData).id;
+    const postData: IFavorite = {
+      SECID: this.bond.SECID,
+      userId: userId
+    }
+    console.log('postData', postData)
+    this.favoriteService.sendTourData(postData).subscribe();
+    this.messageService.add({
+      severity: "success",
+      summary: "Облигация добавлена в избранное"
+    })
   }
 
 

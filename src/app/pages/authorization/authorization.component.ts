@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {IUser} from "../../models/users";
 import {HttpClient} from "@angular/common/http";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/user/user.service";
 import {MessageService} from "primeng/api";
 
 @Component({
@@ -35,7 +35,7 @@ export class AuthorizationComponent implements OnInit {
       /* this.userService.setToStore(token);*/
 
 
-      this.router.navigate(['main']);
+      this.router.navigate(['main/favorites']);
 
     }, ()=> {
       this.messageService.add({severity:'warn', summary:"Данные введены неверно"});
