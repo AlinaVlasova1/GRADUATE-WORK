@@ -14,6 +14,7 @@ import {debounceTime, first, map, Observable, Subject, Subscription, takeUntil} 
 import {Router} from "@angular/router";
 import {DataFromServer, IAllBonds, KeysAndValues, ObjectfromKAndV, StringOrNumber} from "../../../models/bond";
 import {log10} from "chart.js/helpers";
+import {AsaidService} from "../../../services/asaid/asaid.service";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {log10} from "chart.js/helpers";
   templateUrl: './bonds.component.html',
   styleUrls: ['./bonds.component.scss']
 })
-export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
+export class BondsComponent implements OnInit, OnDestroy {
   inBonds: boolean;
   subsBond: Subscription;
   subsSearch: Subscription;
@@ -44,9 +45,11 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   newBondFromServer: IAllBonds[]
 
   constructor(private bondsService: BondsService,
-              private router: Router) { }
+              private router: Router,
+              private asaidService: AsaidService) { }
 
   ngOnInit(): void {
+    this.asaidService.setChapter('bonds');
      this.subsBond = this.bondsService.getAllBonds().subscribe((data) => {
        const keys = Object.keys(this.bondFromServer);
        let newArr: IAllBonds[] = [];
@@ -58,8 +61,7 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
          columns.map((column, index) => {
            for (let i = 0; i < keys.length; i++) {
              if (column == keys[i]){
-               if ((el[index]) && ((keys[i] == 'PREVPRICE')|| (keys[i] == 'COUPONVALUE')|| (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
-                 console.log('PREVPRICE',el[index] )
+               if ((el[index]) && ((keys[i] == 'PREVPRICE' && el[index] != 0)|| (keys[i] == 'COUPONVALUE' && el[index] != 0)|| (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
                 if (keys[i] == 'PREVPRICE'){
                    let j = Math.ceil(Number(el[index])*10);
                    let c:StringOrNumber[] = [keys[i],j]
@@ -72,9 +74,7 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
                }
              }
            }
-
-         }
-         ,
+         },
          )
 
          let s: IAllBonds;
@@ -84,14 +84,9 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
          if (s) {
            newArr.push(s)
          }
-         /*newArrArr.push(newArr)
-           console.log("newArrArr", newArrArr)
-           return newArrArr;*/
          }
        )
        this.bonds = [...newArr];
-       console.log("type", typeof this.bonds )
-       console.log("this.bonds", this.bonds )
        this.bondsCopy = [...this.bonds];
        this.bondsOnPage = this.bonds.slice(0, 12);
        this.rows = Math.ceil((this.bonds.length)/12);
@@ -105,7 +100,6 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
          this.bondsOnPage = [];
        }
        this.bondsCopy = [...this.bonds];
-
      }
     )
     this.subsSearch = this.bondsService.searchValue.subscribe((searchValue) => {
@@ -157,23 +151,13 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     ]
   }
 
-  ngAfterViewInit() {
-
-
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
-  }
-
   ngOnDestroy() {
     this.subsBond.unsubscribe();
     this.subsSearch.unsubscribe();
+    this.asaidService.setChapter('');
   }
 
   onPageChange(ev:  {page: number , pageCount: number}) {
-    console.log("tev.page",ev.page);
      if (ev.page == 0){
        let first = ev.page ;
        let last = first + ev.pageCount;
@@ -191,7 +175,6 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   goToBondInfoPage(bond: any): void {
-    console.log("bond",bond );
     this.bondsService.rememberBond(bond);
     this.router.navigate([`main/info-bond/${bond[1]}`])
   }
@@ -202,23 +185,14 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   onSortPrice(ev: {originalEvent: any, value: {label: 'По возрастанию', sortKey: string}}) {
     let array = [...this.bondsCopy]
     if (ev.value.sortKey == 'decrease') {
-      console.log("успешно");
-      console.log('this.bonds', this.bonds);
-      console.log('this.bondsCopy', this.bondsCopy);
-
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => b.PREVPRICE-a.PREVPRICE
       )
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
-      console.log(' this.bonds',  this.bonds);
     }
     else if (ev.value.sortKey == 'increase') {
-      console.log("успешно");
-      console.log('this.bonds', this.bonds);
-      console.log('this.bondsCopy', this.bondsCopy);
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => a.PREVPRICE-b.PREVPRICE
       )
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
-      console.log(' this.bonds',  this.bonds);
     }
     else {
       this.bonds = [...this.bondsCopy]
@@ -228,43 +202,19 @@ export class BondsComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   onSortCoupon(ev: {originalEvent: any, value: {label: 'По возрастанию', key: string}}) {
     let array = [...this.bondsCopy]
-    console.log('this.bondsCopy', this.bondsCopy);
-    console.log('array',array)
     if (ev.value.key == 'decrease') {
-      console.log("успешно");
-      console.log('this.bonds', this.bonds);
-
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => b.COUPONVALUE-a.COUPONVALUE
       )
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
-      console.log(' this.bonds',  this.bonds);
     }
     else if (ev.value.key == 'increase') {
-      console.log("успешно");
-      console.log('this.bonds', this.bonds);
-      console.log('this.bondsCopy', this.bondsCopy);
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => a.COUPONVALUE-b.COUPONVALUE
       )
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
-      console.log(' this.bonds',  this.bonds);
     }
     else {
-      console.log('this.bondsCopy', this.bondsCopy);
       this.bonds = [...this.bondsCopy]
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
     }
   }
-
-  compareIncrease(a: number, b: number) {
-    if (a < b ) {
-      return -1;
-    }
-    if (a > b) {
-      return 1;
-    }
-    else {
-      return 0;
-    }
-  }
-
 }

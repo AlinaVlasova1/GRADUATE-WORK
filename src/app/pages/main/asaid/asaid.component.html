@@ -6,12 +6,11 @@
     <div class="menu">
       <ul>
         <li *ngFor="let item of items; let i = index">
-          <a [routerLink]="item.route" class="link">
+          <a [routerLink]="item.route" [ngClass]="('link ' + ((chapter == item.chapter) ? 'active' : ''))">
             <span class="ml-2 label">{{item.label}}</span>
           </a>
         </li>
       </ul>
     </div>
   </div>
-
 </div>

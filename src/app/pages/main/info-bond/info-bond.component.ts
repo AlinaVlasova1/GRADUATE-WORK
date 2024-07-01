@@ -50,13 +50,12 @@ export class InfoBondComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     Chart.register(...registerables);
-
     this.bond = this.bondsService.bond;
-   const isin = this.bond.SECID;
-   const currentDay = new Date();
-   const currentTransformDate = this.transformDate(currentDay);
-   const startData: string = this.getStartData(currentTransformDate);
-   this.subscription = this.bondsService.getBondByISIn(isin).subscribe((data) => {
+    const isin = this.bond.SECID;
+    const currentDay = new Date();
+    const currentTransformDate = this.transformDate(currentDay);
+    const startData: string = this.getStartData(currentTransformDate);
+    this.subscription = this.bondsService.getBondByISIn(isin).subscribe((data) => {
      const keys = Object.keys(this.bondFromServer);
      let newArr: ObjectfromKAndV[] = [];
      const arrayData: DataFromServer[] = data.securities.data;
@@ -76,7 +75,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
      this.newBondFromServer = Object.fromEntries(
        newArr
      );
-
      this.newBondFromServer.PREVPRICE = Math.ceil(this.newBondFromServer.PREVPRICE * 10);
      this.newBondFromServer.PREVDATE = new Date(this.newBondFromServer.PREVDATE)
        .toLocaleString('ru-RU',
@@ -115,7 +113,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
            dataForChart.push(<number>arrayData[j][y]*10);
          }
        }
-
        this.labels = labelsForChart;
        this.priceDay = dataForChart;
        const configChart = {
@@ -128,7 +125,6 @@ export class InfoBondComponent implements OnInit, OnDestroy {
            tension: 0.1
          }]
        }
-
        this.chart = new Chart( <HTMLCanvasElement>document.getElementById('badCanvas1'), {
          type: 'line',
          data: configChart,
@@ -140,13 +136,9 @@ export class InfoBondComponent implements OnInit, OnDestroy {
            }
          }
        });
-
        }
      )
-
-
    }
-
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -173,7 +165,7 @@ export class InfoBondComponent implements OnInit, OnDestroy {
     return newDataString;
   }
 
-  addFavorities(ev: Event){
+  addFavoritis(ev: Event){
     const userData = localStorage.getItem('user');
     const userId = JSON.parse(userData).id;
     const postData: IFavorite = {
@@ -187,6 +179,4 @@ export class InfoBondComponent implements OnInit, OnDestroy {
       summary: "Облигация добавлена в избранное"
     })
   }
-
-
 }

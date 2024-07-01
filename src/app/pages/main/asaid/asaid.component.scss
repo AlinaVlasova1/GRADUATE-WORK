@@ -15,7 +15,7 @@
 }
 
 .menu li{
-  width: 200px;
+  width: 150px;
   margin-bottom: 20px
 }
 
@@ -37,4 +37,8 @@
 
 .icon i{
   margin-left: 35px;
+}
+
+.active a{
+  background-color: #5D45FD;
 }

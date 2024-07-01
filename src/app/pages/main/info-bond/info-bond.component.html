@@ -13,10 +13,11 @@
     <p>
       Дата выплаты облигации: {{newBondFromServer.MATDATE}}
     </p>
-    <p-button
-      label="Добавить в избранное"
-      (click)="addFavorities($event)"
-    ></p-button>
+    <button class="btn-success btn button"
+      (click)="addFavoritis($event)"
+    >Добавить в избранное</button>
+    <button class="btn-success btn button mx-2"
+    >Купить</button>
   </p-panel>
 </div>
 <p-toast></p-toast>

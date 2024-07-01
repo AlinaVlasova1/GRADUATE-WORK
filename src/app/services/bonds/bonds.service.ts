@@ -13,7 +13,6 @@ export class BondsService {
   constructor(private http: HttpClient) { }
 
   getAllBonds(): Observable<any> {
-    /*return this.http.get('https://iss.moex.com/iss/securities.json?group_by=type&group_by_filter=ofz_bond');*/
     return this.http.get('https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json');
   }
 

@@ -1,7 +1,7 @@
 <div class="main-container h-100">
   <div class="d-flex flex-column col-3 m-auto h-100">
-    <div class="mt-4 h-100">
-      <h4>Личная информация</h4>
+    <div class="mt-6 h-100">
+      <h4 class="mt-5">Личная информация</h4>
       <div class="mt-3 user-info" [formGroup]="regForm">
         <div class="mt-3 label-input">
           <ng-container *ngTemplateOutlet="userFieldTitle; context:{titleValue: 'Имя'}"></ng-container>
@@ -39,10 +39,10 @@
                  formControlName="repeatPsw">
         </div>
         <div class="mt-4 d-flex justify-content-center button">
-          <button class="btn-success btn" type="submit"
+          <button class="btn-success btn left" type="submit"
                   (click)="postUser()"
                   [disabled]="!regForm.valid">Зарегестрироваться</button>
-          <button class="btn-success btn mx-2" type="submit"
+          <button class="btn-success btn" type="submit"
                   (click)="authUser($event)"
                   >Авторизоваться</button>
         </div>

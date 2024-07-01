@@ -6,7 +6,6 @@ export interface ISecurities {
   metadata: any,
   columns: string[],
   data:DataFromServer[]
-
 }
 export interface IBond {
   securities: ISecurities

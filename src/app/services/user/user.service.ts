@@ -38,8 +38,6 @@ export class UserService {
     }
   }
 
-
-
   clearUserInfo(){
     this.user = undefined;
     this.token = undefined;
@@ -56,12 +54,10 @@ export class UserService {
   }
 
   getFromStorage(): IUser | null {
-
     const userFromStore = localStorage.getItem('user');
     if (userFromStore) {
       return JSON.parse(userFromStore);
     }
     return null;
   }
-
 }

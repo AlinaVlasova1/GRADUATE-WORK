@@ -17,4 +17,8 @@ export class FavoritesService {
   getFavorites(): Observable<IFavorite[]> {
     return this.http.get<IFavorite[]>(`http://localhost:3000/favorites/`);
   }
+
+  deleteFavourite(SECID: string): Observable<IFavorite> {
+    return this.http.delete<IFavorite>(`http://localhost:3000/favorites/${SECID}`);
+  }
 }

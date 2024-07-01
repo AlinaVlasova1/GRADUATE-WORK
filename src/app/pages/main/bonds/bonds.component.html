@@ -1,3 +1,6 @@
+<header class="d-inline-block header">
+<app-header></app-header>
+</header>
 <div class="d-inline-block  mx-4 mt-3 md:flex-row md:justify-content-between">
   <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="по цене облигации" (onChange)="onSortPrice($event)" styleClass="mb-2 md:mb-0" ></p-dropdown>
 </div>
@@ -6,10 +9,9 @@
 </div>
 <div class="d-block  bonds-block">
   <div class="d-inline-block  mt-3 mx-4 cards"
-       (click)="goToBondInfoPage(bond)"
-
        *ngFor="let bond of bondsOnPage">
-          <p-card  header="ISIN: {{bond.SECID}}">
+          <p-card  header="ISIN: {{bond.SECID}}"
+                   (click)="goToBondInfoPage(bond)">
             <p class="m-0">
               Цена: {{bond.PREVPRICE}}р
             </p>
