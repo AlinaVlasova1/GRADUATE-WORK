@@ -5,8 +5,12 @@
     </div>
     <div class="menu">
       <ul>
-        <li *ngFor="let item of items; let i = index">
-          <a [routerLink]="item.route" [ngClass]="('link ' + ((chapter == item.chapter) ? 'active' : ''))">
+        <li *ngFor="let item of items; let i = index"
+            [class.active]="chapter == item.chapter"
+            [ngClass]="('' + ((chapter == item.chapter) ? 'active' : ''))">
+          <a
+             (click)="navigateChapter(item.chapter)"
+             class="link ">
             <span class="ml-2 label">{{item.label}}</span>
           </a>
         </li>

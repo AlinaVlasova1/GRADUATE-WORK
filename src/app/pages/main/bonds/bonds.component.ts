@@ -61,7 +61,9 @@ export class BondsComponent implements OnInit, OnDestroy {
          columns.map((column, index) => {
            for (let i = 0; i < keys.length; i++) {
              if (column == keys[i]){
-               if ((el[index]) && ((keys[i] == 'PREVPRICE' && el[index] != 0)|| (keys[i] == 'COUPONVALUE' && el[index] != 0)|| (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
+               if ((el[index]) && ((keys[i] == 'PREVPRICE' && ((el[index] !== 0) || (el[index] !== '')))||
+                 (keys[i] == 'COUPONVALUE' && ((el[index] !== 0) || (el[index] !== '')))||
+                 (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
                 if (keys[i] == 'PREVPRICE'){
                    let j = Math.ceil(Number(el[index])*10);
                    let c:StringOrNumber[] = [keys[i],j]

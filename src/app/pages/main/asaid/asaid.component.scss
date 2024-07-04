@@ -16,7 +16,9 @@
 
 .menu li{
   width: 150px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
+  border-radius: 5%;
+  padding: 5px;
 }
 
 .link a{
@@ -39,6 +41,6 @@
   margin-left: 35px;
 }
 
-.active a{
+.active {
   background-color: #5D45FD;
 }

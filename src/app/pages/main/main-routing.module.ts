@@ -8,8 +8,9 @@ const routes: Routes = [
     {path: 'favorites', loadChildren: () => import('./favorites/favorites.module').then(m => m.FavoritesModule)},
     {path: 'shares' , loadChildren: () => import('./shares/shares.module').then(m => m.SharesModule)},
     {path: 'bonds' , loadChildren: () => import('./bonds/bonds.module').then(m => m.BondsModule)},
-    {path: 'info-bond/:id', loadChildren: () => import('./info-bond/info-bond.module').then(m => m.InfoBondModule)}
-  ]},
+    {path: 'info-bond/:id', loadChildren: () => import('./info-bond/info-bond.module').then(m => m.InfoBondModule)},
+    {path: '**', loadChildren: () => import('./favorites/favorites.module').then(m => m.FavoritesModule)}
+  ],},
 
 ];
 
