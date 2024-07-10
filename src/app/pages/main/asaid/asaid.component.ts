@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import {IItem} from "../../../models/item";
 import {AsaidService} from "../../../services/asaid/asaid.service";
 import {Subject, Subscription, takeUntil} from "rxjs";
@@ -9,12 +9,11 @@ import {Router} from "@angular/router";
   templateUrl: './asaid.component.html',
   styleUrls: ['./asaid.component.scss']
 })
-export class AsaidComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class AsaidComponent implements OnInit, OnDestroy {
   items: IItem[] = [];
   chapter: string;
   desstroySub: Subject<boolean> = new Subject()
   constructor(
-    private asaidService: AsaidService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -54,20 +53,11 @@ export class AsaidComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
 
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-  }
-
-  ngAfterViewInit() {
-
-  }
-
   ngOnDestroy() {
     this.desstroySub.next(true);
   }
 
   navigateChapter(chapter: string) {
-    console.log('chapter', chapter);
     this.chapter = chapter;
     this.router.navigate([`main/${this.chapter}`])
   }

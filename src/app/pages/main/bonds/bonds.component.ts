@@ -13,8 +13,9 @@ import {BondsService} from "../../../services/bonds/bonds.service";
 import {debounceTime, first, map, Observable, Subject, Subscription, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
 import {DataFromServer, IAllBonds, KeysAndValues, ObjectfromKAndV, StringOrNumber} from "../../../models/bond";
-import {log10} from "chart.js/helpers";
 import {AsaidService} from "../../../services/asaid/asaid.service";
+
+
 
 
 @Component({
@@ -59,32 +60,26 @@ export class BondsComponent implements OnInit, OnDestroy {
        arrayData.map((el, index) => {
          let k: StringOrNumber[][] = [];
          columns.map((column, index) => {
-           for (let i = 0; i < keys.length; i++) {
-             if (column == keys[i]){
-               if ((el[index]) && ((keys[i] == 'PREVPRICE' && ((el[index] !== 0) || (el[index] !== '')))||
-                 (keys[i] == 'COUPONVALUE' && ((el[index] !== 0) || (el[index] !== '')))||
-                 (keys[i] == 'SECID')|| (keys[i] == 'BOARDID'))){
-                if (keys[i] == 'PREVPRICE'){
-                   let j = Math.ceil(Number(el[index])*10);
-                   let c:StringOrNumber[] = [keys[i],j]
-                   k.push(c);
-                 }
-                 else {
-                   let c:StringOrNumber[] = [keys[i],el[index]]
-                   k.push(c) ;
+               for (let i = 0; i < keys.length; i++) {
+                 if (column == keys[i]){
+                     if (keys[i] == 'PREVPRICE'){
+                       let j = Math.ceil(Number(el[index])*10);
+                       let c:StringOrNumber[] = [keys[i],j]
+                       k.push(c);
+                     }
+                     else {
+                       let c:StringOrNumber[] = [keys[i],el[index]]
+                       k.push(c) ;
+                     }
                  }
                }
-             }
-           }
          },
          )
-
-         let s: IAllBonds;
-         s = Object.fromEntries(
-           k
-         )
-         if (s) {
-           newArr.push(s)
+         let s = !(Object.values(Object.fromEntries(k))).includes(null);
+         let t = !(Object.values(Object.fromEntries(k))).includes(0);
+         let p = !(Object.values(Object.fromEntries(k))).includes('');
+         if (s && t && p) {
+           newArr.push(Object.fromEntries(k))
          }
          }
        )
