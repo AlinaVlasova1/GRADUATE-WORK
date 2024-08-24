@@ -14,7 +14,8 @@ export class AsaidComponent implements OnInit, OnDestroy {
   chapter: string;
   desstroySub: Subject<boolean> = new Subject()
   constructor(
-    private router: Router) { }
+    private router: Router,
+    private asaidService: AsaidService) { }
 
   ngOnInit(): void {
     this.items = [
@@ -35,13 +36,13 @@ export class AsaidComponent implements OnInit, OnDestroy {
       },
       {
         label: 'Валюта',
-        route: [''],
-        chapter: ''
+        route: ['currency'],
+        chapter: 'currency'
       },
       {
         label: 'Металлы',
-        route: [''],
-        chapter: ''
+        route: ['metals'],
+        chapter: 'metals'
       },
      /* {
         label: 'Настройка',
@@ -49,7 +50,7 @@ export class AsaidComponent implements OnInit, OnDestroy {
       }*/
     ];
 
-
+    this.chapter = 'favorites';
 
   }
 
@@ -59,6 +60,7 @@ export class AsaidComponent implements OnInit, OnDestroy {
 
   navigateChapter(chapter: string) {
     this.chapter = chapter;
+    this.asaidService.chapter = chapter;
     this.router.navigate([`main/${this.chapter}`])
   }
 }

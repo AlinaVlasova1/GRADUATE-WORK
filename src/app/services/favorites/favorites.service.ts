@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {IFavorite} from "../../models/favorite";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
-
+  searchValue = new BehaviorSubject<string>('');
   constructor(private http: HttpClient) { }
 
   sendTourData(data: IFavorite): Observable<IFavorite>{
@@ -16,6 +16,13 @@ export class FavoritesService {
 
   getFavorites(): Observable<IFavorite[]> {
     return this.http.get<IFavorite[]>(`http://localhost:3000/favorites/`);
+  }
+
+  getFavoritesByUserId(userId: string): Observable<IFavorite[]> {
+    const params = new HttpParams({
+      fromString: userId,
+    });
+    return this.http.get<IFavorite[]>(`http://localhost:3000/favorites/`, {params});
   }
 
   deleteFavourite(SECID: string): Observable<IFavorite> {

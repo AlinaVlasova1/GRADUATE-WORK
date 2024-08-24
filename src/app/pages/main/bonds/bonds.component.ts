@@ -28,7 +28,7 @@ export class BondsComponent implements OnInit, OnDestroy {
   subsBond: Subscription;
   subsSearch: Subscription;
   bonds: any ;
-  rows: number;
+ @Input() rows: number;
   first = 1;
   length: number;
   bondsOnPage: any[];
@@ -55,7 +55,9 @@ export class BondsComponent implements OnInit, OnDestroy {
        const keys = Object.keys(this.bondFromServer);
        let newArr: IAllBonds[] = [];
        let newArrArr: any = [];
-       const arrayData: DataFromServer[] = data.securities.data.slice(0, 100);
+       /*const arrayData: DataFromServer[] = data.securities.data.slice(0, 100);*/
+       const arrayData: DataFromServer[] = data.securities.data;
+       console.log("length", arrayData.length)
        const columns: string[] = data.securities.columns;
        arrayData.map((el, index) => {
          let k: StringOrNumber[][] = [];
@@ -84,9 +86,11 @@ export class BondsComponent implements OnInit, OnDestroy {
          }
        )
        this.bonds = [...newArr];
+       console.log('this.bonds.length', this.bonds.length)
        this.bondsCopy = [...this.bonds];
        this.bondsOnPage = this.bonds.slice(0, 12);
        this.rows = Math.ceil((this.bonds.length)/12);
+       console.log('this.rows',this.rows)
        if (this.bonds) {
          this.length = this.bonds.length;
        }

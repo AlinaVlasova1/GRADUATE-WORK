@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, Output} from '@angular/core';
 import {BondsService} from "../../../services/bonds/bonds.service";
 import {FormControl, Validators} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,11 @@ import {FormControl, Validators} from "@angular/forms";
 export class HeaderComponent implements OnInit, AfterViewInit {
   searchValue: FormControl;
 
-  constructor(private bondService: BondsService) { }
+  constructor(private bondService: BondsService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.searchValue = new FormControl('', [Validators.required, Validators.minLength(2)])
+    this.searchValue = new FormControl('', [Validators.required, Validators.minLength(2)]);
   }
 
   ngAfterViewInit() {
@@ -26,4 +28,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
     })
   }
+
+  /*searchInChapter(chapter){
+    switch (chapter){
+
+    }
+  }*/
+
 }
