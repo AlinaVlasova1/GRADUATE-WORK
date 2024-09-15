@@ -24,11 +24,10 @@ import {AsaidService} from "../../../services/asaid/asaid.service";
   styleUrls: ['./bonds.component.scss']
 })
 export class BondsComponent implements OnInit, OnDestroy {
+  destroySub: Subject<boolean> = new Subject<boolean>()
   inBonds: boolean;
-  subsBond: Subscription;
-  subsSearch: Subscription;
   bonds: any ;
- @Input() rows: number;
+  rows: number;
   first = 1;
   length: number;
   bondsOnPage: any[];
@@ -50,60 +49,10 @@ export class BondsComponent implements OnInit, OnDestroy {
               private asaidService: AsaidService) { }
 
   ngOnInit(): void {
+    this.first = 1;
     this.asaidService.setChapter('bonds');
-     this.subsBond = this.bondsService.getAllBonds().subscribe((data) => {
-       const keys = Object.keys(this.bondFromServer);
-       let newArr: IAllBonds[] = [];
-       let newArrArr: any = [];
-       /*const arrayData: DataFromServer[] = data.securities.data.slice(0, 100);*/
-       const arrayData: DataFromServer[] = data.securities.data;
-       console.log("length", arrayData.length)
-       const columns: string[] = data.securities.columns;
-       arrayData.map((el, index) => {
-         let k: StringOrNumber[][] = [];
-         columns.map((column, index) => {
-               for (let i = 0; i < keys.length; i++) {
-                 if (column == keys[i]){
-                     if (keys[i] == 'PREVPRICE'){
-                       let j = Math.ceil(Number(el[index])*10);
-                       let c:StringOrNumber[] = [keys[i],j]
-                       k.push(c);
-                     }
-                     else {
-                       let c:StringOrNumber[] = [keys[i],el[index]]
-                       k.push(c) ;
-                     }
-                 }
-               }
-         },
-         )
-         let s = !(Object.values(Object.fromEntries(k))).includes(null);
-         let t = !(Object.values(Object.fromEntries(k))).includes(0);
-         let p = !(Object.values(Object.fromEntries(k))).includes('');
-         if (s && t && p) {
-           newArr.push(Object.fromEntries(k))
-         }
-         }
-       )
-       this.bonds = [...newArr];
-       console.log('this.bonds.length', this.bonds.length)
-       this.bondsCopy = [...this.bonds];
-       this.bondsOnPage = this.bonds.slice(0, 12);
-       this.rows = Math.ceil((this.bonds.length)/12);
-       console.log('this.rows',this.rows)
-       if (this.bonds) {
-         this.length = this.bonds.length;
-       }
-       if (this.bonds.length !=0){
-         this.bondsOnPage = this.bonds.slice(0, 12);
-       }
-       else {
-         this.bondsOnPage = [];
-       }
-       this.bondsCopy = [...this.bonds];
-     }
-    )
-    this.subsSearch = this.bondsService.searchValue.subscribe((searchValue) => {
+    this.initBonds();
+    this.bondsService.searchValue.pipe(takeUntil(this.destroySub)).subscribe((searchValue) => {
       if (searchValue) {
         this.bonds = Object.values(this.bondsCopy).filter((el: any) => {
           return  el.SECID.toLowerCase().includes(searchValue.toLowerCase())
@@ -118,7 +67,6 @@ export class BondsComponent implements OnInit, OnDestroy {
         this.bondsOnPage = [];
       }
       this.length = this.bonds.length;
-      console.log('this.bonds4', this.bonds)
     })
     this.checkInBonds();
     this.bondsService.setInBonds(this.inBonds);
@@ -150,28 +98,34 @@ export class BondsComponent implements OnInit, OnDestroy {
         key: 'nothing'
       }
     ]
+    console.log('first', this.first)
   }
 
   ngOnDestroy() {
-    this.subsBond.unsubscribe();
-    this.subsSearch.unsubscribe();
+    this.destroySub.next(true)
     this.asaidService.setChapter('');
   }
 
   onPageChange(ev:  {page: number , pageCount: number}) {
-     if (ev.page == 0){
+    console.log('ev', ev)
+     if (ev.page === 0){
        let first = ev.page ;
        let last = first + ev.pageCount;
        this.bondsOnPage = Object.values(this.bonds).slice(first, last);
+       this.first = ev.page + 1;
      }
     else if (((ev.page+1)*12) < this.length) {
-       let first = ev.page*ev.pageCount -1 ;
+       let first = ev.page * ev.pageCount - 1 ;
        let last = first + ev.pageCount;
        this.bondsOnPage = this.bonds.slice(first, last);
+       this.first = ev.page * ev.pageCount - 1 ;
+       console.log('this.first1', this.first)
      } else {
-       let first = ev.page *ev.pageCount ;
+       let first = ev.page * ev.pageCount ;
        let last = this.length;
        this.bondsOnPage = this.bonds.slice(first, last);
+       this.first = ev.page * ev.pageCount;
+       console.log('this.first2', this.first)
      }
   }
 
@@ -218,4 +172,57 @@ export class BondsComponent implements OnInit, OnDestroy {
       this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
     }
   }
+
+  initBonds(){
+    this.bondsService.getAllBonds().pipe(takeUntil(this.destroySub)).subscribe((data) => {
+        const keys = Object.keys(this.bondFromServer);
+        let newArr: IAllBonds[] = [];
+        let newArrArr: any = [];
+        /*const arrayData: DataFromServer[] = data.securities.data.slice(0, 100);*/
+        const arrayData: DataFromServer[] = data.securities.data;
+        const columns: string[] = data.securities.columns;
+        arrayData.map((el, index) => {
+            let k: StringOrNumber[][] = [];
+            columns.map((column, index) => {
+                for (let i = 0; i < keys.length; i++) {
+                  if (column == keys[i]){
+                    if (keys[i] == 'PREVPRICE'){
+                      let j = Math.ceil(Number(el[index])*10);
+                      let c:StringOrNumber[] = [keys[i],j]
+                      k.push(c);
+                    }
+                    else {
+                      let c:StringOrNumber[] = [keys[i],el[index]]
+                      k.push(c) ;
+                    }
+                  }
+                }
+              },
+            )
+            let s = !(Object.values(Object.fromEntries(k))).includes(null);
+            let t = !(Object.values(Object.fromEntries(k))).includes(0);
+            let p = !(Object.values(Object.fromEntries(k))).includes('');
+            if (s && t && p) {
+              newArr.push(Object.fromEntries(k))
+            }
+          }
+        )
+        this.bonds = [...newArr];
+        this.bondsCopy = [...this.bonds];
+        this.bondsOnPage = this.bonds.slice(0, 12);
+        this.rows = Math.ceil((this.bonds.length)/12);
+        if (this.bonds) {
+          this.length = this.bonds.length;
+        }
+        if (this.bonds.length !=0){
+          this.bondsOnPage = this.bonds.slice(0, 12);
+        }
+        else {
+          this.bondsOnPage = [];
+        }
+        this.bondsCopy = [...this.bonds];
+      }
+    )
+  }
+
 }

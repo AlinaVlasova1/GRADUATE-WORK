@@ -2,6 +2,8 @@ import {AfterViewInit, Component, Input, OnInit, Output} from '@angular/core';
 import {BondsService} from "../../../services/bonds/bonds.service";
 import {FormControl, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import {FavoritesService} from "../../../services/favorites/favorites.service";
+import {AsaidService} from "../../../services/asaid/asaid.service";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   searchValue: FormControl;
 
   constructor(private bondService: BondsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private favoriteService: FavoritesService,
+              private asaidService: AsaidService) { }
 
   ngOnInit(): void {
     this.searchValue = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -20,19 +24,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.searchValue.valueChanges.subscribe((changes) => {
-      /*console.log('changes', changes);
-      console.log('this.bondService.checkInBonds()', this.bondService.checkInBonds());*/
-    if (this.bondService.checkInBonds()) {
-      this.bondService.searchValue.next(changes);
+      console.log('changes', changes);
+      console.log('this.bondService.checkInBonds()', this.bondService.checkInBonds());
+      const service = this.searchInChapter(this.asaidService.chapter)
+      this.sendSearchValue(service, changes)
       console.log('searchValue', this.bondService.searchValue);
-    }
+
     })
   }
 
-  /*searchInChapter(chapter){
+  searchInChapter(chapter: string){
     switch (chapter){
-
+      case 'favorites': {
+      return this.favoriteService
+      }
+      case 'bonds': {
+        return this.bondService
+      }
     }
-  }*/
+  }
+
+  sendSearchValue(service: any, change: string){
+    service.searchValue.next(change)
+  }
 
 }

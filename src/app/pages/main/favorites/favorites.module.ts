@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FavoritesRoutingModule } from './favorites-routing.module';
 import { FavoritesComponent } from './favorites.component';
 import {CardModule} from "primeng/card";
+import {PaginatorModule} from "primeng/paginator";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {CardModule} from "primeng/card";
     imports: [
         CommonModule,
         FavoritesRoutingModule,
-        CardModule
+        CardModule,
+        PaginatorModule
     ]
 })
 export class FavoritesModule { }

@@ -21,3 +21,12 @@
   </div>
   <h1 class="mt-3 mx-4" *ngIf="favorites?.length === 0">В избранное еще ничего не добавлено</h1>
 </div>
+<div class="flex-auto">
+  <p-paginator #paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="firstPage"
+    [rows]="rows"
+    [totalRecords]="length"
+    [showCurrentPageReport]="true"
+  >{{firstPage}} too {{rows}}</p-paginator>
+</div>
