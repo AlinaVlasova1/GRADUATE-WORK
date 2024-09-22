@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {IFavorite, IFavoriteFromServer} from "../../../models/favorite";
 import {log10} from "chart.js/helpers";
 import {AsaidService} from "../../../services/asaid/asaid.service";
-import {from, map, of, Subject, switchMap, takeUntil, tap} from "rxjs";
+import {debounceTime, from, map, of, Subject, switchMap, takeUntil, tap} from "rxjs";
 import {Paginator} from "primeng/paginator";
 
 @Component({
@@ -40,7 +40,9 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.asaidService.setChapter('favorites');
     this.initFavorites();
-    this.favoriteService.searchValue.pipe(takeUntil(this.destroySub)).subscribe((searchValue) => {
+    this.favoriteService.searchValue.pipe(takeUntil(this.destroySub),
+      debounceTime(300)
+      ).subscribe((searchValue) => {
       if (searchValue) {
         this.favorites = Object.values(this.favoritesCopy).filter((el: any) => {
           return  el.SECID.toLowerCase().includes(searchValue.toLowerCase())
@@ -93,7 +95,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
                 this.newfavoriteFromServer = Object.fromEntries(
                   newArr
                 );
-
                 this.newfavoriteFromServer.PREVPRICE = Math.ceil(this.newfavoriteFromServer.PREVPRICE * 10);
                 this.favorites.push(this.newfavoriteFromServer);
                 resArr.push(this.newfavoriteFromServer);
@@ -104,11 +105,11 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
            this.length = res.length;
            this.rows = Math.ceil((this.length)/12);
+           this.favoritesCopy = structuredClone(this.favorites)
          })
         return resArr
       })
-    )
-      .subscribe((res) => {})
+    ).subscribe((res) => {})
   }
 
   goToBondInfoPage(bond: any): void {

@@ -24,12 +24,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.searchValue.valueChanges.subscribe((changes) => {
-      console.log('changes', changes);
-      console.log('this.bondService.checkInBonds()', this.bondService.checkInBonds());
       const service = this.searchInChapter(this.asaidService.chapter)
-      this.sendSearchValue(service, changes)
-      console.log('searchValue', this.bondService.searchValue);
-
+      this.sendSearchValue(service, changes);
     })
   }
 

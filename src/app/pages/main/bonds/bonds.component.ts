@@ -53,7 +53,9 @@ export class BondsComponent implements OnInit, OnDestroy {
     this.first = 1;
     this.asaidService.setChapter('bonds');
     this.initBonds();
-    this.bondsService.searchValue.pipe(takeUntil(this.destroySub)).subscribe((searchValue) => {
+    this.bondsService.searchValue.pipe(takeUntil(this.destroySub),
+      debounceTime(300)
+      ).subscribe((searchValue) => {
       if (searchValue) {
         this.bonds = Object.values(this.bondsCopy).filter((el: any) => {
           return  el.SECID.toLowerCase().includes(searchValue.toLowerCase())
@@ -99,7 +101,6 @@ export class BondsComponent implements OnInit, OnDestroy {
         key: 'nothing'
       }
     ]
-    console.log('first', this.first)
   }
 
   ngOnDestroy() {
@@ -108,7 +109,6 @@ export class BondsComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(ev:  {page: number , pageCount: number}) {
-    console.log('ev', ev)
      if (ev.page === 0){
        let first = ev.page ;
        let last = first + ev.pageCount;
@@ -120,13 +120,11 @@ export class BondsComponent implements OnInit, OnDestroy {
        let last = first + ev.pageCount;
        this.bondsOnPage = this.bonds.slice(first, last);
        this.first = ev.page * ev.pageCount - 1 ;
-       console.log('this.first1', this.first)
      } else {
        let first = ev.page * ev.pageCount ;
        let last = this.length;
        this.bondsOnPage = this.bonds.slice(first, last);
        this.first = ev.page * ev.pageCount;
-       console.log('this.first2', this.first)
      }
   }
 
