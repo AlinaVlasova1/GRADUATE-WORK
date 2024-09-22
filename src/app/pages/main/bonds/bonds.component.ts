@@ -36,6 +36,7 @@ export class BondsComponent implements OnInit, OnDestroy {
   options: any;
   sortKey: any;
   key: any;
+  itemsCount: number = 9;
   bondFromServer: IAllBonds = {
     SECID: '',
     PREVPRICE: 0,
@@ -61,7 +62,7 @@ export class BondsComponent implements OnInit, OnDestroy {
         this.bonds = {...this.bondsCopy};
       }
       if (this.bonds.length !=0){
-        this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+        this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
       }
       else {
         this.bondsOnPage = [];
@@ -114,7 +115,7 @@ export class BondsComponent implements OnInit, OnDestroy {
        this.bondsOnPage = Object.values(this.bonds).slice(first, last);
        this.first = ev.page + 1;
      }
-    else if (((ev.page+1)*12) < this.length) {
+    else if (((ev.page+1) * this.itemsCount) < this.length) {
        let first = ev.page * ev.pageCount - 1 ;
        let last = first + ev.pageCount;
        this.bondsOnPage = this.bonds.slice(first, last);
@@ -142,16 +143,16 @@ export class BondsComponent implements OnInit, OnDestroy {
     if (ev.value.sortKey == 'decrease') {
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => b.PREVPRICE-a.PREVPRICE
       )
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
     else if (ev.value.sortKey == 'increase') {
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => a.PREVPRICE-b.PREVPRICE
       )
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
     else {
       this.bonds = [...this.bondsCopy]
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
   }
 
@@ -160,16 +161,16 @@ export class BondsComponent implements OnInit, OnDestroy {
     if (ev.value.key == 'decrease') {
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => b.COUPONVALUE-a.COUPONVALUE
       )
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
     else if (ev.value.key == 'increase') {
       this.bonds = array.sort((a: IAllBonds, b: IAllBonds) => a.COUPONVALUE-b.COUPONVALUE
       )
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
     else {
       this.bonds = [...this.bondsCopy]
-      this.bondsOnPage = Object.values(this.bonds).slice(0, 12);
+      this.bondsOnPage = Object.values(this.bonds).slice(0, this.itemsCount);
     }
   }
 
@@ -209,13 +210,13 @@ export class BondsComponent implements OnInit, OnDestroy {
         )
         this.bonds = [...newArr];
         this.bondsCopy = [...this.bonds];
-        this.bondsOnPage = this.bonds.slice(0, 12);
-        this.rows = Math.ceil((this.bonds.length)/12);
+        this.bondsOnPage = this.bonds.slice(0, this.itemsCount);
+        this.rows = Math.ceil((this.bonds.length)/this.itemsCount);
         if (this.bonds) {
           this.length = this.bonds.length;
         }
         if (this.bonds.length !=0){
-          this.bondsOnPage = this.bonds.slice(0, 12);
+          this.bondsOnPage = this.bonds.slice(0, this.itemsCount);
         }
         else {
           this.bondsOnPage = [];
