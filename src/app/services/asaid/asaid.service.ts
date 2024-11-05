@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +9,5 @@ export class AsaidService {
 
   setChapter(menuChapter: string) {
     this.chapter = menuChapter
-  }
-
-  getChapter(): Observable<string> {
-    return of(this.chapter);
   }
 }

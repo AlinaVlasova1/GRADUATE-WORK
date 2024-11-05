@@ -1,10 +1,10 @@
 <div class="asaid-container d-flex">
   <div class="flex-row">
     <div class="mt-4 icon d-inline-block">
-      <i class="pi pi-align-justify burger" style="font-size: 30px"></i>
+      <i class="pi pi-align-justify burger" (click)="isOpenMenu = !isOpenMenu" style="font-size: 30px"></i>
     </div>
     <div class="menu">
-      <ul>
+      <ul *ngIf="isOpenMenu">
         <li *ngFor="let item of items; let i = index"
             [ngClass]="('' + ((chapter == item.chapter) ? 'active' : ''))">
           <a (click)="navigateChapter(item.chapter)"

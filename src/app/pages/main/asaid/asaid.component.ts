@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import {IItem} from "../../../models/item";
 import {AsaidService} from "../../../services/asaid/asaid.service";
-import {Subject, Subscription, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,8 +11,9 @@ import {Router} from "@angular/router";
 })
 export class AsaidComponent implements OnInit, OnDestroy {
   items: IItem[] = [];
-  chapter: string;
-  desstroySub: Subject<boolean> = new Subject()
+  chapter: string = 'favorites';
+  destroySub: Subject<boolean> = new Subject();
+  isOpenMenu: boolean = true;
   constructor(
     private router: Router,
     private asaidService: AsaidService) { }
@@ -49,13 +50,10 @@ export class AsaidComponent implements OnInit, OnDestroy {
         route: ['']
       }*/
     ];
-
-    this.chapter = 'favorites';
-
   }
 
   ngOnDestroy() {
-    this.desstroySub.next(true);
+    this.destroySub.next(true);
   }
 
   navigateChapter(chapter: string) {

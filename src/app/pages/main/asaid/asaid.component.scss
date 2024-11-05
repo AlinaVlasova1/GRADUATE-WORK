@@ -2,20 +2,20 @@
   background-color: #A89CFF;
   color: white;
   height: 100%;
+  display: inline-block;
 }
 
 .menu {
   display: inline-block;
   height: 90%;
   padding: 10%;
-  width: 100%;
 }
 
 .menu ul{
   display: inline-block;
   list-style-type: none;
   margin-top: 30%;
-  width: 100%;
+  width: 140px;
 }
 
 .menu li{
@@ -44,6 +44,7 @@
 
 .icon i{
   margin-left: 35px;
+  margin-right: 35px;
 }
 
 .active {
